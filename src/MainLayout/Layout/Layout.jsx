@@ -61,7 +61,7 @@ const Layout = () => {
                         <div>
                           <div>
                             <input
-                              className=" input  h-[40px] input-bordered focus:outline-none  join-item"
+                              className=" input bg-gray-100  h-[40px] input-bordered focus:outline-none  join-item"
                               placeholder="Search For Products"
                             />
                           </div>

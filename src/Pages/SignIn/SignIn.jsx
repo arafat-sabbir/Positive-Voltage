@@ -1,46 +1,53 @@
 import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Container from "../../Utility/Container/Container";
 import { IoEyeOutline } from "react-icons/io5";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { useState } from "react";
 import GoogleSignIn from "../../Auth/GoogleSignIn/GoogleSignIn";
+import useAuth from "../../Utility/Hooks/UseAuth/useAuth";
+import toast from "react-hot-toast";
 
 const SignIn = () => {
+  // Toggle show/hide password
   const [showp, setShowp] = useState(true);
+  // get SignIn function from UseAuth
+  const {signInUser}=useAuth()
+  // Navigate to Desired page
+  const navigate  = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
-    // const toastid = toast.loading("Sign In Processing");
-    // signInUser(data.email, data.password)
-    //   .then((res) => {
-    //     toast.success("Sign In SuccessFull", { id: toastid });
-    //     navigate(location.state ? location.state : "/");
-    //     console.log(res);
-    //   })
-    //   .catch((error) => {
-    //   if(error.message){
-    //     toast.error("Invalid Email And Password",{id:toastid})
-    //   }
-    //   });
+    const toastid = toast.loading("Sign In Processing");
+    signInUser(data.email, data.password)
+      .then((res) => {
+        toast.success("Sign In SuccessFull", { id: toastid });
+        navigate(location.state ? location.state : "/");
+        console.log(res);
+      })
+      .catch((error) => {
+      if(error.message){
+        toast.error("Invalid Email And Password",{id:toastid})
+      }
+      });
     console.log(data);
   };
   return (
     <Container>
       <div className="flex container mx-auto h-full  !justify-center !items-center">
         <Helmet>
-          <title>Positive Voltage || Sign In</title>
+          <title>Positive Voltage | Sign In</title>
         </Helmet>
         <div className="lg:w-1/2 w-[90vw]">
-          <div className="card  lg:w-3/4  mx-auto shadow-[0_0_35px_#ECECEC] backdrop-blur-sm p-10 my-10">
+          <div className="card  lg:w-3/4  mx-auto lg:shadow-[0_0_35px_#ECECEC] backdrop-blur-sm lg:p-10 pb-6 my-10">
             <form onSubmit={handleSubmit(onSubmit)} className="card-body">
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text font-semibold flex">
+                  <span className="label-text  font-medium flex">
                     Email <span className="text-red-500 text-2xl">*</span>
                   </span>
                 </label>
@@ -57,7 +64,7 @@ const SignIn = () => {
               </div>
               <div className="form-control relative">
                 <label className="label">
-                  <span className="label-text font-semibold flex">
+                  <span className="label-text font-medium flex">
                     Password <span className="text-red-500 text-2xl">*</span>
                   </span>
                 </label>
