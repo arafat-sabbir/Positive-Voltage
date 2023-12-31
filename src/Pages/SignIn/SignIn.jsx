@@ -1,40 +1,14 @@
 import { Helmet } from "react-helmet";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Container from "../../Utility/Container/Container";
-import { useContext, useState } from "react";
-import { Context } from "../../Auth/AuthProvider/AuthProvider";
-import axios from "axios";
-import toast from "react-hot-toast";
-import { FcGoogle } from "react-icons/fc";
 import { IoEyeOutline } from "react-icons/io5";
 import { FaRegEyeSlash } from "react-icons/fa";
+import { useState } from "react";
+import GoogleSignIn from "../../Auth/GoogleSignIn/GoogleSignIn";
 
 const SignIn = () => {
-  const { signWithGoogle } = useContext(Context);
-  const navigate = useNavigate();
   const [showp, setShowp] = useState(true);
-  console.log(showp);
-  const handleGoogleLogin = () => {
-    signWithGoogle()
-      .then((res) => {
-        const userInfo = {
-          email: res.user.email,
-          name: res.user.displayName,
-          photo: res.user.photoURL,
-          type: "others",
-          creationDate: new Date().toDateString(),
-        };
-        navigate("/");
-        axios.post(`/createUser`, userInfo).then((res) => {
-          console.log(res);
-        });
-      })
-      // handle Error and show to the user
-      .catch((error) => {
-        toast.error(error);
-      });
-  };
   const {
     register,
     handleSubmit,
@@ -135,14 +109,7 @@ const SignIn = () => {
               </p>
             </form>
             <div className="w-3/4 mx-auto">
-              <div className="divider -mt-4"></div>
-              <button
-                onClick={handleGoogleLogin}
-                className="btn z-50 rounded-full focus:border-dashed border-2 border-gray-200 focus:border-main hover:bg-transparent w-full bg-transparent font-semibold mb-3"
-              >
-                <FcGoogle></FcGoogle>
-                Sign IN With Google
-              </button>
+              <GoogleSignIn></GoogleSignIn>
             </div>
           </div>
         </div>
