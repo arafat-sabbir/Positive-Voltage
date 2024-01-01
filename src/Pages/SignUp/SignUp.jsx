@@ -1,9 +1,8 @@
-import { Link,  useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { Helmet } from "react-helmet";
 import { useState } from "react";
-import axios from "axios";
 import useAuth from "../../Utility/Hooks/UseAuth/useAuth";
 import Container from "../../Utility/Container/Container";
 import { IoEyeOutline } from "react-icons/io5";
@@ -15,7 +14,7 @@ const SignUp = () => {
   const [phoneNumberError, setPhoneNumberError] = useState("");
   // Get the Instance Of Axios
   const axios = useAxios();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   // Toggle Password Show And Hide
   const [showp, setShowp] = useState(true);
   const [photoName, setPhotoName] = useState("");
@@ -38,11 +37,12 @@ const SignUp = () => {
   } = useForm();
   const { signUpUser, updateUserProfile } = useAuth();
   const onSubmit = async (data) => {
-    setPhoneNumberError("")
     const phoneDigit = data.phone.slice(0, 2);
-    console.log(phoneDigit);
+    if (data.phone.length !== 11) {
+      return setPhoneNumberError("Phone number must be 11 digits Long");
+    }
     if (phoneDigit !== "01") {
-     return setPhoneNumberError("Phone Number must start with 01");
+      return setPhoneNumberError("Phone Number must start with 01");
     } else {
       setPhoneNumberError("");
     }
@@ -61,7 +61,7 @@ const SignUp = () => {
             const userdata = {
               userEmail: data.email,
               name: data.name,
-              phoneNumber:data.phone,
+              phoneNumber: data.phone,
               photo: hostedPhoto.data.data.display_url,
               creationDate: new Date().toDateString(),
             };
@@ -102,14 +102,13 @@ const SignUp = () => {
                   placeholder="your name"
                   name="name"
                   className="input input-bordered bg- focus:outline-none hover:bg- focus:border-dashed focus:border-main"
-                  
                   {...register("name", { required: true })}
                 />
                 {errors.name?.type === "required" && (
-                    <p className="text-red-500 text-sm" role="alert">
-                      Name Is required
-                    </p>
-                  )}
+                  <p className="text-red-500 text-sm" role="alert">
+                    Name Is required
+                  </p>
+                )}
               </div>
               <div className="form-control">
                 <label className="label">
@@ -121,15 +120,14 @@ const SignUp = () => {
                   type="email"
                   placeholder="your email"
                   name="email"
-                 
                   className="input input-bordered bg- focus:outline-none hover:bg- focus:border-dashed focus:border-main"
                   {...register("email", { required: true })}
                 />
                 {errors.email?.type === "required" && (
-                    <p className="text-red-500 text-sm" role="alert">
-                      Email Is required
-                    </p>
-                  )}
+                  <p className="text-red-500 text-sm" role="alert">
+                    Email Is required
+                  </p>
+                )}
               </div>
               <div className="form-control relative">
                 <label className="label">
@@ -142,19 +140,18 @@ const SignUp = () => {
                   placeholder="your phone number"
                   name="name"
                   className="input input-bordered bg- focus:outline-none hover:bg- focus:border-dashed focus:border-main"
-                  
                   {...register("phone", { required: true })}
                 />
                 {phoneNumberError && (
                   <p className="text-red-500 mt-2 text-sm" role="alert">
-                    Phone Number must start with 01
+                    {phoneNumberError}
                   </p>
                 )}
                 {errors.phone?.type === "required" && (
-                    <p className="text-red-500 text-sm" role="alert">
-                      Phone Is required
-                    </p>
-                  )}
+                  <p className="text-red-500 text-sm" role="alert">
+                    Phone Is required
+                  </p>
+                )}
               </div>
               <div className="form-control">
                 <label className="label">
@@ -190,7 +187,6 @@ const SignUp = () => {
                   type={showp ? "password" : "text"}
                   name="password"
                   placeholder="password"
-             
                   className="input input-bordered focus:outline-none focus:border-dashed focus:border-main"
                   {...register("password", {
                     required: true,
@@ -219,11 +215,10 @@ const SignUp = () => {
                   )}
                   {errors.password?.type === "pattern" && (
                     <p className="text-red-500 text-sm" role="alert">
-                      Password Should Contain atleast one Letter And One
-                      Special Character
+                      Password Should Contain atleast one Letter And One Special
+                      Character
                     </p>
                   )}
-                  
                 </div>
               </div>
               <div className="form-control mt-6">

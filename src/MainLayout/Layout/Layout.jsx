@@ -1,15 +1,29 @@
 import { Link, NavLink, Outlet } from "react-router-dom";
 import { FiShoppingCart } from "react-icons/fi";
+import useCurrentUserInfo from "../../Utility/Hooks/UseCurrentUserInfo/useCurrentUserInfo";
+import useAuth from "../../Utility/Hooks/UseAuth/useAuth";
 
 const Layout = () => {
+  const { userInfo, isLoading, refetch } = useCurrentUserInfo();
+  const {user, signOutUser} = useAuth()
+  console.log(userInfo, isLoading);
+  const handleSignOut = () => {
+    signOutUser()
+    .then(res=>{})
+    .catch(err=>{})
+  }
   const Navlinks = (
     <>
       <li>
-        <NavLink to={"/cart"} className="text-2xl ml-3">{FiShoppingCart}</NavLink>
+        <NavLink to={"/cart"} className="text-2xl ml-3">
+          {FiShoppingCart}
+        </NavLink>
       </li>
-      <li>
+      {user?<li>
+        <button onClick={handleSignOut}>Log Out</button>
+      </li>:<li>
         <NavLink to={"/signIn"}>Sign In</NavLink>
-      </li>
+      </li>}
     </>
   );
   return (
@@ -67,7 +81,9 @@ const Layout = () => {
                           </div>
                         </div>
                         <div className="indicator">
-                          <button className="py-2 px-2 h-[40px] bg-[#FB8038] hover:bg-[#FB8038] text-white join-item">Search</button>
+                          <button className="py-2 px-2 h-[40px] bg-[#FB8038] hover:bg-[#FB8038] text-white join-item">
+                            Search
+                          </button>
                         </div>
                       </div>
                     </div>
