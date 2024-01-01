@@ -8,6 +8,7 @@ import { useState } from "react";
 import GoogleSignIn from "../../Auth/GoogleSignIn/GoogleSignIn";
 import useAuth from "../../Utility/Hooks/UseAuth/useAuth";
 import toast from "react-hot-toast";
+import FacebookSIgnIn from "../../Auth/FacebookSignIn/FacebookSIgnIn";
 
 const SignIn = () => {
   // Toggle show/hide password
@@ -117,6 +118,7 @@ const SignIn = () => {
             </form>
             <div className="w-3/4 mx-auto">
               <GoogleSignIn></GoogleSignIn>
+              <FacebookSIgnIn></FacebookSIgnIn>
             </div>
           </div>
         </div>

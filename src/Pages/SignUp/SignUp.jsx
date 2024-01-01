@@ -63,6 +63,7 @@ const SignUp = () => {
               name: data.name,
               phoneNumber: data.phone,
               photo: hostedPhoto.data.data.display_url,
+              method:'email',
               creationDate: new Date().toDateString(),
             };
             axios.post(`/users`, userdata).then((res) => {

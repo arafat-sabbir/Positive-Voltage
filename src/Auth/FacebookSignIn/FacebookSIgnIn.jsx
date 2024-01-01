@@ -1,28 +1,27 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import { FcGoogle } from "react-icons/fc";
-import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import useAuth from "../../Utility/Hooks/UseAuth/useAuth";
 import useAxios from "../../Utility/Hooks/UseAxios/useAxios";
+import toast from "react-hot-toast";
+import { FaFacebook } from "react-icons/fa";
 
-const GoogleSignIn = () => {
-  const { signWithGoogle } = useAuth();
-  const axios = useAxios();
-  const navigate = useNavigate();
-  const location = useLocation();
+const FacebookSIgnIn = () => {
+    const { signWithFacebook } = useAuth();
+    const navigate = useNavigate();
+    const axios = useAxios()
   const handleGoogleLogin = () => {
-    signWithGoogle()
+    signWithFacebook()
       .then((res) => {
         const userInfo = {
           email: res.user.email,
           name: res.user.displayName,
           photo: res.user.photoURL,
-          method: "google",
+          method:'facebook',
           creationDate: new Date().toDateString(),
         };
-        console.log(res.user.email, res.user.displayName);
-        axios.post(`/users`, userInfo).then((res) => {
-          console.log(res.data);
-        });
+        console.log(userInfo);
+        axios
+          .post(`/users`, userInfo)
+          .then((res) => console.log(res.data));
         navigate(location.state ? location.state : "/");
         toast.success("Sign In SuccessFully");
         navigate(location.state ? location.state : "/");
@@ -32,16 +31,15 @@ const GoogleSignIn = () => {
   };
   return (
     <div>
-      <div className="divider -mt-4"></div>
       <button
         onClick={handleGoogleLogin}
         className="btn z-50 rounded-full border-dashed bg-gray-100 hover:border-main border-main hover:bg-transparent w-full bg-transparent font-semibold mb-3"
       >
-        <FcGoogle></FcGoogle>
-        Sign IN With Google
+        <FaFacebook className="text-blue-500"></FaFacebook>
+        Sign IN With Facebook
       </button>
     </div>
   );
 };
 
-export default GoogleSignIn;
+export default FacebookSIgnIn;
