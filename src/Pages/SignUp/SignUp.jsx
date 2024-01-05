@@ -89,8 +89,8 @@ const SignUp = () => {
         <Helmet>
           <title>Positive Voltage | Sign Up</title>
         </Helmet>
-        <div className="lg:w-1/2 w-[90vw]">
-          <div className="card  lg:w-10/12  mx-auto lg:shadow-[0_0_35px_#ECECEC] backdrop-blur-sm lg:px-10 py-5 my-6 lg:my-0">
+        <div className="lg:w-1/2 w-[100vw]">
+          <div className="card  lg:w-9/12  mx-auto lg:shadow-[0_0_35px_#ECECEC] backdrop-blur-sm lg:px-10 py-5 my-6 lg:my-0">
             <form onSubmit={handleSubmit(onSubmit)} className="card-body">
               <div className="form-control">
                 <label className="label">
