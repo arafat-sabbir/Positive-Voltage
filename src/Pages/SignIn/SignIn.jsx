@@ -14,26 +14,26 @@ const SignIn = () => {
   // Toggle show/hide password
   const [showp, setShowp] = useState(true);
   // get SignIn function from UseAuth
-  const {signInUser}=useAuth()
+  const { signInUser } = useAuth()
   // Navigate to Desired page
-  const navigate  = useNavigate();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
-    const toastid = toast.loading("Sign In Processing");
+    const toastId = toast.loading("Sign In Processing");
     signInUser(data.email, data.password)
       .then((res) => {
-        toast.success("Sign In SuccessFull", { id: toastid });
+        toast.success("Sign In SuccessFull", { id: toastId });
         navigate(location.state ? location.state : "/");
         console.log(res);
       })
       .catch((error) => {
-      if(error.message){
-        toast.error("Invalid Email And Password",{id:toastid})
-      }
+        if (error.message) {
+          toast.error("Invalid Email And Password", { id: toastId })
+        }
       });
     console.log(data);
   };
@@ -44,7 +44,7 @@ const SignIn = () => {
           <title>Positive Voltage | Sign In</title>
         </Helmet>
         <div className="lg:w-1/2 w-[100vw]">
-          <div className="card  lg:w-3/4  mx-auto lg:shadow-[0_0_35px_#ECECEC] backdrop-blur-sm lg:p-10 pb-6 lg:my-10">
+          <div className="card  lg:w-3/4  mx-auto lg:shadow-[0_0_35px_#ECECEC] dark:lg:shadow-gray-600/20 backdrop-blur-sm lg:p-10 pb-6 lg:my-10">
             <form onSubmit={handleSubmit(onSubmit)} className="card-body">
               <div className="form-control">
                 <label className="label">

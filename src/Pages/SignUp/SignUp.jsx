@@ -16,7 +16,7 @@ const SignUp = () => {
   const axios = useAxios();
   const navigate = useNavigate();
   // Toggle Password Show And Hide
-  const [showp, setShowp] = useState(true);
+  const [showPassword, setShowPassword] = useState(true);
   const [photoName, setPhotoName] = useState("");
   const [photo, setPhoto] = useState("");
   const imageHostingKey = import.meta.env.VITE_IMAGE_HOST_KEY;
@@ -46,7 +46,7 @@ const SignUp = () => {
     } else {
       setPhoneNumberError("");
     }
-    const toastid = toast.loading("Sign Up Processing");
+    const toastId = toast.loading("Sign Up Processing");
     const hostedPhoto = await axios.post(imageHostingAPi, formData, {
       headers: {
         "content-type": "multipart/form-data",
@@ -58,7 +58,7 @@ const SignUp = () => {
         console.log(res.user);
         updateUserProfile(data.name, hostedPhoto.data.data.display_url)
           .then(() => {
-            const userdata = {
+            const userData = {
               userEmail: data.email,
               name: data.name,
               phoneNumber: data.phone,
@@ -66,9 +66,9 @@ const SignUp = () => {
               method:'email',
               creationDate: new Date().toDateString(),
             };
-            axios.post(`/users`, userdata).then((res) => {
+            axios.post(`/users`, userData).then((res) => {
               if (res.data.insertedId) {
-                toast.success("Sign Up SuccessFully", { id: toastid });
+                toast.success("Sign Up SuccessFully", { id: toastId });
                 reset();
                 navigate(location.state ? location.state : "/");
               }
@@ -79,7 +79,7 @@ const SignUp = () => {
       })
       .catch((error) => {
         if (error.code === "auth/email-already-in-use") {
-          toast.error("Email Already Registered", { id: toastid });
+          toast.error("Email Already Registered", { id: toastId });
         }
       });
   };
@@ -90,7 +90,7 @@ const SignUp = () => {
           <title>Positive Voltage | Sign Up</title>
         </Helmet>
         <div className="lg:w-1/2 w-[100vw]">
-          <div className="card  lg:w-9/12  mx-auto lg:shadow-[0_0_35px_#ECECEC] backdrop-blur-sm lg:px-10 py-5 my-6 lg:my-0">
+          <div className="card  lg:w-9/12  mx-auto lg:shadow-[0_0_35px_#ECECEC] dark:lg:shadow-gray-600/20 backdrop-blur-sm lg:px-10 py-5 my-6 lg:my-0">
             <form onSubmit={handleSubmit(onSubmit)} className="card-body">
               <div className="form-control">
                 <label className="label">
@@ -185,7 +185,7 @@ const SignUp = () => {
                   </span>
                 </label>
                 <input
-                  type={showp ? "password" : "text"}
+                  type={showPassword ? "password" : "text"}
                   name="password"
                   placeholder="password"
                   className="input input-bordered focus:outline-none focus:border-dashed focus:border-main"
@@ -197,11 +197,11 @@ const SignUp = () => {
                   })}
                 />
                 <button
-                  onClick={() => setShowp(!showp)}
+                  onClick={() => setShowPassword(!showPassword)}
                   type="button"
                   className="absolute top-[65%] right-3 text-xl"
                 >
-                  {showp ? <IoEyeOutline></IoEyeOutline> : <FaRegEyeSlash />}
+                  {showPassword ? <IoEyeOutline></IoEyeOutline> : <FaRegEyeSlash />}
                 </button>
                 <div>
                   {errors.password?.type === "minLength" && (
